@@ -42,10 +42,15 @@
 					<tr>
 					
 					<?php
+						$status_id = 2;
+						$lettreDebut = 'e';
+					
 						$stmt = $pdo->query('SELECT users.id AS id, username, email, name
 											 FROM users
 											 JOIN status
-											 ON users.status_id = status.id');
+											 ON users.status_id = status.id
+											 WHERE status_id = '.$status_id.'
+											 AND username LIKE \''.$lettreDebut.'%'.'\'');
 						while ($row = $stmt->fetch()) {
 							echo "<tr>";
 								echo "<td>".$row['id']."</td>";
