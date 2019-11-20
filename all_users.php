@@ -60,14 +60,17 @@
 							echo "<tr>";
 					
 							$status_id = $_GET['status'];
-							$lettreDebut = $_GET['letter'];
+							$lettreDebut = $_GET['letter'].'%';
+							
+							$stmt = $pdo->prepare("SELECT users.id AS id, username, email, name
+												   FROM users
+												   JOIN status
+												   ON users.status_id = status.id
+												   WHERE status_id = :status_id
+												   AND username LIKE :lettreDebut;");
+												   
+							$stmt->execute(['status_id' => $status_id, 'lettreDebut' => $lettreDebut]);
 					
-							$stmt = $pdo->query("SELECT users.id AS id, username, email, name
-												 FROM users
-												 JOIN status
-												 ON users.status_id = status.id
-												 WHERE status_id = $status_id
-												 AND username LIKE '$lettreDebut%'");
 							while ($row = $stmt->fetch()) {
 								echo "<tr>";
 									echo "<td>".$row['id']."</td>";
