@@ -41,6 +41,7 @@
 						<select class="form-control" name="status">
 							<option value="1" <?php if(isset($_GET['letter']) && $_GET['status']){echo "selected";}?>>Waiting for account validation</option>
 							<option value="2" <?php if(isset($_GET['letter']) && $_GET['status']){echo "selected";}?>>Active account</option>
+							<option value="3" <?php if(isset($_GET['letter']) && $_GET['status']){echo "selected";}?>>Waiting for account deletion</option>
 						</select><br />
 						<input type="submit" value="OK" class="form-control" style="width: 50px;" /><br />
 					</form>
