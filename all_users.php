@@ -39,9 +39,9 @@
 						<input type="text" name="letter" class="form-control" <?php if(isset($_GET['letter'])){echo "value='".$_GET['letter']."' ";}?>/><br />
 						<p>And status is </p>
 						<select class="form-control" name="status">
-							<option value="1" <?php if(isset($_GET['letter']) && $_GET['status']){echo "selected";}?>>Waiting for account validation</option>
-							<option value="2" <?php if(isset($_GET['letter']) && $_GET['status']){echo "selected";}?>>Active account</option>
-							<option value="3" <?php if(isset($_GET['letter']) && $_GET['status']){echo "selected";}?>>Waiting for account deletion</option>
+							<option value="1" <?php if(isset($_GET['letter']) && $_GET['status'] == 1){echo "selected";}?>>Waiting for account validation</option>
+							<option value="2" <?php if(isset($_GET['letter']) && $_GET['status'] == 2){echo "selected";}?>>Active account</option>
+							<option value="3" <?php if(isset($_GET['letter']) && $_GET['status'] == 3){echo "selected";}?>>Waiting for account deletion</option>
 						</select><br />
 						<input type="submit" value="OK" class="form-control" style="width: 50px;" /><br />
 					</form>
@@ -52,13 +52,18 @@
 					<?php
 					
 						if (isset($_GET['letter'])) {
-							
-							echo "<tr>";
-								echo "<th>Id</th>";
-								echo "<th>Username</th>";
-								echo "<th>Email</th>";
-								echo "<th>Status</th>";
-							echo "<tr>";
+					
+					?>
+					
+					<tr>
+						<th>Id</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Status</th>
+						<?php if(isset($_GET['letter']) && $_GET['status'] == 3) { echo "<th>Deletion</th>"; } ?>
+					</tr>
+					
+					<?php
 					
 							$status_id = $_GET['status'];
 							$lettreDebut = $_GET['letter'].'%';
@@ -78,6 +83,9 @@
 									echo "<td>".$row['username']."</td>";
 									echo "<td>".$row['email']."</td>";
 									echo "<td>".$row['name']."</td>";
+									if(isset($_GET['letter']) && $_GET['status'] == 3) { 
+										echo "<td><a href='#'>Ask deletion</a></td>";
+									}
 								echo "</tr>";
 							}
 							
