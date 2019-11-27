@@ -47,6 +47,28 @@
 					</form>
 				</div>
 				
+				<?php
+				
+					if (isset($_GET['status_id']) && isset($_GET['user_id']) && isset($_GET['action'])) {
+				
+						// Requête permettant de créer une nouvelle entree dans la table action_log
+						$newActionLog = "INSERT INTO action_log (action_date, action_name, user_id) VALUES(NOW(), '".$_GET['action']."', ".$_GET['user_id'].")";
+
+						// On exécute la requête $newActionLog
+						$requete_newActionLog = $pdo->prepare($newActionLog);
+						$requete_newActionLog->execute();
+						
+						// Requête permettant de modifier le status_id de l'utilisateur
+						$updateStatus ="UPDATE users SET status_id='".$_GET['status_id']."' WHERE id=".$_GET['user_id'];
+
+						// On exécute la requête $updateStatus
+						$requete_updateStatus = $pdo->prepare($updateStatus);
+						$requete_updateStatus->execute();
+					
+					}
+				
+				?>
+				
 				<table class="table table-bordered table-striped">
 					
 					<?php
@@ -84,7 +106,7 @@
 									echo "<td>".$row['email']."</td>";
 									echo "<td>".$row['name']."</td>";
 									if(isset($_GET['letter']) && $_GET['status'] != 3) { 
-										echo "<td><a href='all_users.php/?letter=&status=3&status_id=3&user_id=".$row['id']."&action=askDeletion'>Ask deletion</a></td>";
+										echo "<td><a href='all_users.php?letter=&status=3&status_id=3&user_id=".$row['id']."&action=askDeletion'>Ask deletion</a></td>";
 									}
 								echo "</tr>";
 							}
