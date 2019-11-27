@@ -50,6 +50,9 @@
 				<?php
 				
 					if (isset($_GET['status_id']) && isset($_GET['user_id']) && isset($_GET['action']) && $_GET['action'] == 'askDeletion') {
+						
+						// On commence la transaction
+						$pdo->beginTransaction();
 				
 						// Requête permettant de créer une nouvelle entree dans la table action_log
 						$newActionLog = "INSERT INTO action_log (action_date, action_name, user_id) VALUES(NOW(), :action, :user_id)";
@@ -67,6 +70,9 @@
 						// On exécute la requête $updateStatus
 						$requete_updateStatus = $pdo->prepare($updateStatus);
 						$requete_updateStatus->execute(['status_id' => $_GET['status_id'], 'user_id' => $_GET['user_id']]);
+						
+						// On commit la transaction une fois finie
+						$pdo->commit();
 					
 					}
 				
