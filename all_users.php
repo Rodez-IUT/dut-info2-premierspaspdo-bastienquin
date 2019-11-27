@@ -49,7 +49,7 @@
 				
 				<?php
 				
-					if (isset($_GET['status_id']) && isset($_GET['user_id']) && isset($_GET['action'])) {
+					if (isset($_GET['status_id']) && isset($_GET['user_id']) && isset($_GET['action']) && $_GET['action'] == 'askDeletion') {
 				
 						// Requête permettant de créer une nouvelle entree dans la table action_log
 						$newActionLog = "INSERT INTO action_log (action_date, action_name, user_id) VALUES(NOW(), :action, :user_id)";
@@ -57,6 +57,9 @@
 						// On exécute la requête $newActionLog
 						$requete_newActionLog = $pdo->prepare($newActionLog);
 						$requete_newActionLog->execute(['action' => $_GET['action'], 'user_id' => $_GET['user_id']]);
+						
+						// On provoque une erreur entre l'insertion dans la table action_log et l'update du status_id de l'utilisateur
+						$erreur = $pdo->query("SELECT Marcel FROM Fraysse");
 						
 						// Requête permettant de modifier le status_id de l'utilisateur
 						$updateStatus ="UPDATE users SET status_id = :status_id WHERE id = :user_id";
