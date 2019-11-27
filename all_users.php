@@ -60,7 +60,7 @@
 						<th>Username</th>
 						<th>Email</th>
 						<th>Status</th>
-						<?php if(isset($_GET['letter']) && $_GET['status'] == 3) { echo "<th>Deletion</th>"; } ?>
+						<?php if(isset($_GET['letter']) && $_GET['status'] != 3) { echo "<th>Deletion</th>"; } ?>
 					</tr>
 					
 					<?php
@@ -83,8 +83,8 @@
 									echo "<td>".$row['username']."</td>";
 									echo "<td>".$row['email']."</td>";
 									echo "<td>".$row['name']."</td>";
-									if(isset($_GET['letter']) && $_GET['status'] == 3) { 
-										echo "<td><a href='#'>Ask deletion</a></td>";
+									if(isset($_GET['letter']) && $_GET['status'] != 3) { 
+										echo "<td><a href='all_users.php/?letter=&status=3&status_id=3&user_id=".$row['id']."&action=askDeletion'>Ask deletion</a></td>";
 									}
 								echo "</tr>";
 							}
